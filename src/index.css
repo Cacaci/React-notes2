@@ -54,24 +54,25 @@ body {
 }
 #notes-list .container .list-group-item {
  position: relative;
- padding: 0 0 0 15px;
+ padding: 0 15px;
  height: 40px;
  line-height: 40px;
  border: 0;
  margin-bottom: 0;
  border-radius: 0;
+ cursor: pointer;
 }
-a.list-group-item .list-group-item-heading {
+li.list-group-item .list-group-item-heading {
   float: left;
   width: 220px;
   margin-bottom: 0;
 }
-a.list-group-item:hover {
+li.list-group-item:hover {
   z-index: 2;
   color: #fff;
   background-color: #337ab7;
 }
-a.list-group-item:hover .list-group-item-heading {
+li.list-group-item:hover .list-group-item-heading {
   color: #fff;
 }
 .list-group-btns {
@@ -81,6 +82,9 @@ a.list-group-item:hover .list-group-item-heading {
   right: -65px;
   top: 0;
   transition: all ease .3s;
+}
+.list-group-item-heading {
+  margin-bottom: 0;
 }
 .list-group-item:hover .list-group-btns{
   right: 0;

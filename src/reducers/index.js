@@ -41,8 +41,6 @@ const notes = (state = initState, action) => {
     
   }
   const handleFavorite = (state, noteIndex) => {
-    console.log(noteIndex)
-    let id = state.activeNote.id
     let notes = state.notes
     let newNotes = notes.map((item, index) => {
       if (index === noteIndex) {

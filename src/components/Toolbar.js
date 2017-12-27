@@ -25,28 +25,21 @@
 
 // export default Toolbar
 
-/* ES6写法 */
+/* ES6写法(actions)*/
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class Toolbar extends Component {
-  constructor (props) {
-    super(props)
-    // this.goDelete = this.goDelete.bind(this)
-  }
-  // goDelete () {
-  //   const { handleDelete, notes } = this.props
-  //   if (notes.length === 0) return
-  //   handleDelete()
-  // }
-
   render () {
-    const { actions, handleAdd, activeNote, handleFavorite } = this.props
+    const { handleAdd } = this.props
     return (
       <div id="toolbar">
-        <i onClick={() => actions.addNote()} className="glyphicon glyphicon-plus"></i>
-        {/* <i onClick={() => handleFavorite()} className={activeNote.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></i> */}
-        {/* <i onClick={this.goDelete} className="glyphicon glyphicon-remove"></i> */}
+        <i onClick={() => handleAdd()} className="glyphicon glyphicon-plus"></i>
       </div>
     )
   }
+}
+
+Toolbar.propTypes = {
+  handleAdd: PropTypes.func
 }

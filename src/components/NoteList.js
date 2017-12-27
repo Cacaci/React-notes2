@@ -45,9 +45,9 @@
 
 // export default NoteList
 
-/* ES6写法 */
-import React, { Component, PropTypes } from 'react'
-import index from '../reducers/index';
+/* ES6写法(actions) */
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class NoteList extends Component {
   constructor (props) {
@@ -56,25 +56,24 @@ export default class NoteList extends Component {
     this.goDelete = this.goDelete.bind(this)
   }
   updateActive (e, note) {
-    const { actions, handleActiveNote, handleEdit } = this.props
+    const { handleActiveNote, handleEdit } = this.props
     e.preventDefault()
-    actions.setActiveNote(note)
-    actions.editNote(note.text)
+    handleActiveNote(note)
+    handleEdit(note.text)
   }
   goDelete (index) {
-    const { actions, handleDelete, notes } = this.props
+    const { handleDelete, notes } = this.props
     if (notes.length === 0) return
-    actions.deleteNote(index)
+    handleDelete(index)
   }
   render () {
-    const { actions, handleFavorite, notes, show, activeNote, handleFilter, handleDelete } = this.props
+    const { handleFavorite, notes, show, activeNote, handleFilter } = this.props
     let filterNotes = show === 'all' ? notes : notes.filter(note => note.favorite === true)
 
-    // 收藏列表不展示按钮
     const favoriteBtns = (note, index) => {
       return show === 'all' ? (
         <div className="list-group-btns">
-          <span onClick={() => actions.toggleFavorite(index)} className={note.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></span>
+          <span onClick={() => handleFavorite(index)} className={note.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></span>
           <span onClick={() => this.goDelete(index)} className="glyphicon glyphicon-remove"></span>
         </div>
       ) : ''
@@ -85,30 +84,37 @@ export default class NoteList extends Component {
           <h2>Notes | coligo</h2>
           <div className="btn-group btn-group-justified" role="group">
             <div className="btn-group" role="group">
-              <button onClick={() => actions.toggleFilter('all')} type="button" className="btn btn-default">All Notes</button>
+              <button onClick={() => handleFilter('all')} type="button" className="btn btn-default">All Notes</button>
             </div>
             <div className="btn-group" role="group">
-              <button onClick={() => actions.toggleFilter('favorite')} type="button" className="btn btn-default">Favorites</button>
+              <button onClick={() => handleFilter('favorite')} type="button" className="btn btn-default">Favorites</button>
             </div>
           </div>
         </div>
         <div className="container">
-          <div className="list-group">
+          <ul className="list-group">
             {filterNotes.map((note, index) => {
               return (
-                <a key={index} className={activeNote.id === note.id ? 'list-group-item active' : 'list-group-item'} href="Javascript:void(0);">
+                <li key={index} className={activeNote.id === note.id ? 'list-group-item active' : 'list-group-item'}>
                   <div onClick={e => this.updateActive(e, note)} className="list-group-item-heading">{note.text.substring(0, 30)}</div>
-                  {/* <div className="list-group-btns">
-                    <span onClick={() => handleFavorite(index)} className={note.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></span>
-                    <span onClick={() => this.goDelete(index)} className="glyphicon glyphicon-remove"></span>
-                  </div> */}
                   {favoriteBtns(note, index)}
-                </a>
+                </li>
               )
             })}
-          </div>
+          </ul>
         </div>
       </div>
     )
   }
+}
+
+NoteList.propTypes = {
+  actions: PropTypes.object,
+  notes: PropTypes.array,
+  show: PropTypes.string,
+  activeNote: PropTypes.object,
+  handleFavorite: PropTypes.func,
+  handleFilter: PropTypes.func,
+  handleActiveNote: PropTypes.func,
+  handleEdit: PropTypes.func
 }

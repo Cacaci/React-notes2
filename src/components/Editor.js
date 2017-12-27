@@ -22,22 +22,21 @@
 
 // export default Editor
 
-/* ES6写法 */
-import React, { Component } from 'react'
 
-export default class Toolbar extends Component {
+/* ES6写法(actions) */
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+export default class Editor extends Component {
   constructor (props) {
     super(props)
     this.handleInput = this.handleInput.bind(this)
   }
   handleInput (e) {
-    const { actions, activeNote, handleEdit } = this.props
+    const { handleEdit } = this.props
     let text = e.target.value
-    actions.editNote(text)
+    handleEdit(text)
   }
-  componentDidMount () {
-  }
-
   render () {
     const { activeNote } = this.props
     return (
@@ -48,4 +47,9 @@ export default class Toolbar extends Component {
       </div>
     )
   }
+}
+
+Editor.propTypes = {
+  activeNote: PropTypes.object,
+  handleEdit: PropTypes.func
 }
