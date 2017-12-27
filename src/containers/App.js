@@ -1,14 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Editor from '../components/Editor'
 import NoteList from '../components/NoteList'
 import Toolbar from '../components/Toolbar'
 
-import { addNote, editNote, deleteNote, setActiveNote, toggleFavorite, toggleFilter } from '../actions'
+// import { addNote, editNote, deleteNote, setActiveNote, toggleFavorite, toggleFilter } from '../actions'
+import * as Actions from '../actions'
 import index from '../reducers/index';
 
 const App = ({
+  actions,
   dispatch,
   notes,
   show,
@@ -22,12 +25,14 @@ const App = ({
 }) => (
   <div id="note">
     <Toolbar
+      actions={actions}
       notes={notes}
       activeNote={activeNote}
       handleAdd={handleAdd}
       handleDelete={handleDelete}
       handleFavorite={handleFavorite} />
     <NoteList
+      actions={actions}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
       handleFavorite={handleFavorite}
@@ -36,7 +41,7 @@ const App = ({
       activeNote={activeNote}
       handleActiveNote={handleActiveNote}
       handleFilter={handleFilter} />
-    <Editor handleEdit={handleEdit} activeNote={activeNote} />
+    <Editor actions={actions} handleEdit={handleEdit} activeNote={activeNote} />
   </div>
 )
 
@@ -46,13 +51,17 @@ const mapStateToProps = (state) => ({
   show: state.show
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  handleAdd: () => dispatch(addNote()),
-  handleActiveNote: note => dispatch(setActiveNote(note)),
-  handleDelete: index => dispatch(deleteNote(index)),
-  handleEdit: text => dispatch(editNote(text)),
-  handleFavorite: index => dispatch(toggleFavorite(index)),
-  handleFilter: style => dispatch(toggleFilter(style))
+// const mapDispatchToProps = (dispatch) => ({
+//   handleAdd: () => dispatch(addNote()),
+//   handleActiveNote: note => dispatch(setActiveNote(note)),
+//   handleDelete: index => dispatch(deleteNote(index)),
+//   handleEdit: text => dispatch(editNote(text)),
+//   handleFavorite: index => dispatch(toggleFavorite(index)),
+//   handleFilter: style => dispatch(toggleFilter(style))
+// })
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

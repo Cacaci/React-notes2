@@ -56,25 +56,25 @@ export default class NoteList extends Component {
     this.goDelete = this.goDelete.bind(this)
   }
   updateActive (e, note) {
-    const { handleActiveNote, handleEdit } = this.props
+    const { actions, handleActiveNote, handleEdit } = this.props
     e.preventDefault()
-    handleActiveNote(note)
-    handleEdit(note.text)
+    actions.setActiveNote(note)
+    actions.editNote(note.text)
   }
   goDelete (index) {
-    const { handleDelete, notes } = this.props
+    const { actions, handleDelete, notes } = this.props
     if (notes.length === 0) return
-    handleDelete(index)
+    actions.deleteNote(index)
   }
   render () {
-    const {handleFavorite, notes, show, activeNote, handleFilter, handleDelete } = this.props
+    const { actions, handleFavorite, notes, show, activeNote, handleFilter, handleDelete } = this.props
     let filterNotes = show === 'all' ? notes : notes.filter(note => note.favorite === true)
 
     // 收藏列表不展示按钮
     const favoriteBtns = (note, index) => {
       return show === 'all' ? (
         <div className="list-group-btns">
-          <span onClick={() => handleFavorite(index)} className={note.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></span>
+          <span onClick={() => actions.toggleFavorite(index)} className={note.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></span>
           <span onClick={() => this.goDelete(index)} className="glyphicon glyphicon-remove"></span>
         </div>
       ) : ''
@@ -85,10 +85,10 @@ export default class NoteList extends Component {
           <h2>Notes | coligo</h2>
           <div className="btn-group btn-group-justified" role="group">
             <div className="btn-group" role="group">
-              <button onClick={() => handleFilter('all')} type="button" className="btn btn-default">All Notes</button>
+              <button onClick={() => actions.toggleFilter('all')} type="button" className="btn btn-default">All Notes</button>
             </div>
             <div className="btn-group" role="group">
-              <button onClick={() => handleFilter('favorite')} type="button" className="btn btn-default">Favorites</button>
+              <button onClick={() => actions.toggleFilter('favorite')} type="button" className="btn btn-default">Favorites</button>
             </div>
           </div>
         </div>

@@ -40,10 +40,10 @@ export default class Toolbar extends Component {
   // }
 
   render () {
-    const { handleAdd, activeNote, handleFavorite } = this.props
+    const { actions, handleAdd, activeNote, handleFavorite } = this.props
     return (
       <div id="toolbar">
-        <i onClick={() => handleAdd()} className="glyphicon glyphicon-plus"></i>
+        <i onClick={() => actions.addNote()} className="glyphicon glyphicon-plus"></i>
         {/* <i onClick={() => handleFavorite()} className={activeNote.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></i> */}
         {/* <i onClick={this.goDelete} className="glyphicon glyphicon-remove"></i> */}
       </div>
