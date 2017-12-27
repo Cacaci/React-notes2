@@ -9,6 +9,10 @@ import Toolbar from '../components/Toolbar'
 // import { addNote, editNote, deleteNote, setActiveNote, toggleFavorite, toggleFilter } from '../actions'
 import * as Actions from '../actions'
 
+console.log(typeof Actions)
+// console.log(Actions)
+console.log(Object.keys(Actions))
+
 /* 不使用bindActionCreators */
 // const App = ({
 //   actions,
@@ -89,5 +93,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 })
+console.log(mapDispatchToProps())
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

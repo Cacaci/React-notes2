@@ -7,20 +7,6 @@ import {
   TOGGLE_FILTER
 } from '../constants'
 
-// const notes = (state = [{id: 0, text: 'New note', favorite: false}], action) => {
-//   switch (action.type) {
-//     case ADD_NOTE:
-//       let newId = ++id
-//       let newNote = {id: newId, text: 'New note' + `${newId}`, favorite: false}
-//       return state.push(newNote)
-//     case DELETE_NOTE:
-//       state.splice(index, 1)
-//       return state
-//     default:
-//       return state
-//   }
-// }
-
 const initState = {
   notes: [{id: 0, text: 'New note', favorite: false}], // 所有笔记
   activeNote: {id: 0, text: 'New note', favorite: false}, // 当前笔记
@@ -70,6 +56,7 @@ const notes = (state = initState, action) => {
   switch (action.type) {
     case ADD_NOTE: 
       let newId = ++id
+      // eslint-disable-next-line
       let newNote = {id: newId, text: 'New note' + `${newId}`, favorite: false}
       return Object.assign({}, state, {
         notes: [
