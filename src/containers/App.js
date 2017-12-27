@@ -6,6 +6,7 @@ import NoteList from '../components/NoteList'
 import Toolbar from '../components/Toolbar'
 
 import { addNote, editNote, deleteNote, setActiveNote, toggleFavorite, toggleFilter } from '../actions'
+import index from '../reducers/index';
 
 const App = ({
   dispatch,
@@ -28,6 +29,8 @@ const App = ({
       handleFavorite={handleFavorite} />
     <NoteList
       handleEdit={handleEdit}
+      handleDelete={handleDelete}
+      handleFavorite={handleFavorite}
       show={show}
       notes={notes}
       activeNote={activeNote}
@@ -46,9 +49,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleAdd: () => dispatch(addNote()),
   handleActiveNote: note => dispatch(setActiveNote(note)),
-  handleDelete: () => dispatch(deleteNote()),
+  handleDelete: index => dispatch(deleteNote(index)),
   handleEdit: text => dispatch(editNote(text)),
-  handleFavorite: () => dispatch(toggleFavorite()),
+  handleFavorite: index => dispatch(toggleFavorite(index)),
   handleFilter: style => dispatch(toggleFilter(style))
 })
 

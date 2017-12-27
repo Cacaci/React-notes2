@@ -47,11 +47,13 @@
 
 /* ES6写法 */
 import React, { Component, PropTypes } from 'react'
+import index from '../reducers/index';
 
 export default class NoteList extends Component {
   constructor (props) {
     super(props)
     this.updateActive = this.updateActive.bind(this)
+    this.goDelete = this.goDelete.bind(this)
   }
   updateActive (e, note) {
     const { handleActiveNote, handleEdit } = this.props
@@ -59,10 +61,24 @@ export default class NoteList extends Component {
     handleActiveNote(note)
     handleEdit(note.text)
   }
-
+  goDelete (index) {
+    const { handleDelete, notes } = this.props
+    if (notes.length === 0) return
+    handleDelete(index)
+  }
   render () {
-    const { notes, show, activeNote, handleFilter } = this.props
+    const {handleFavorite, notes, show, activeNote, handleFilter, handleDelete } = this.props
     let filterNotes = show === 'all' ? notes : notes.filter(note => note.favorite === true)
+
+    // 收藏列表不展示按钮
+    const favoriteBtns = (note, index) => {
+      return show === 'all' ? (
+        <div className="list-group-btns">
+          <span onClick={() => handleFavorite(index)} className={note.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></span>
+          <span onClick={() => this.goDelete(index)} className="glyphicon glyphicon-remove"></span>
+        </div>
+      ) : ''
+    }
     return (
       <div id="notes-list">
         <div id="list-header">
@@ -80,12 +96,13 @@ export default class NoteList extends Component {
           <div className="list-group">
             {filterNotes.map((note, index) => {
               return (
-                <a key={index} className="list-group-item" href="Javascript:void(0);">
-                  <span className="list-group-item-heading">{note.text.substring(0, 30)}</span>
-                  <div className="list-group-btns">
-                    <span className="glyphicon glyphicon-star"></span>
-                    <span className="glyphicon glyphicon-remove"></span>
-                  </div>
+                <a key={index} className={activeNote.id === note.id ? 'list-group-item active' : 'list-group-item'} href="Javascript:void(0);">
+                  <div onClick={e => this.updateActive(e, note)} className="list-group-item-heading">{note.text.substring(0, 30)}</div>
+                  {/* <div className="list-group-btns">
+                    <span onClick={() => handleFavorite(index)} className={note.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></span>
+                    <span onClick={() => this.goDelete(index)} className="glyphicon glyphicon-remove"></span>
+                  </div> */}
+                  {favoriteBtns(note, index)}
                 </a>
               )
             })}

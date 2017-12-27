@@ -7,6 +7,20 @@ import {
   TOGGLE_FILTER
 } from '../constants'
 
+// const notes = (state = [{id: 0, text: 'New note', favorite: false}], action) => {
+//   switch (action.type) {
+//     case ADD_NOTE:
+//       let newId = ++id
+//       let newNote = {id: newId, text: 'New note' + `${newId}`, favorite: false}
+//       return state.push(newNote)
+//     case DELETE_NOTE:
+//       state.splice(index, 1)
+//       return state
+//     default:
+//       return state
+//   }
+// }
+
 const initState = {
   notes: [{id: 0, text: 'New note', favorite: false}], // 所有笔记
   activeNote: {id: 0, text: 'New note', favorite: false}, // 当前笔记
@@ -16,24 +30,22 @@ const initState = {
 let id = 0
 
 const notes = (state = initState, action) => {
-  const handleDelete = (state, id) => {
+  const handleDelete = (state, index) => {
     let newNotes
     let notes = state.notes
-    for (let i = 0; i < notes.length; i++) {
-      if (notes[i].id === id) {
-        newNotes = [...notes.slice(0, i), ...notes.slice(i + 1)]
-      }
-    }
+    newNotes = [...notes.slice(0, index), ...notes.slice(index + 1)]
     return Object.assign({}, state, {
       notes: newNotes,
-      activeNote: newNotes[0] ? newNotes[0] : []
+      activeNote: newNotes[index] || newNotes[0] || []
     })
+    
   }
-  const handleFavorite = (state) => {
+  const handleFavorite = (state, noteIndex) => {
+    console.log(noteIndex)
     let id = state.activeNote.id
     let notes = state.notes
-    let newNotes = notes.map(item => {
-      if (item.id === id) {
+    let newNotes = notes.map((item, index) => {
+      if (index === noteIndex) {
         item.favorite = !item.favorite
       }
       return item
@@ -69,7 +81,7 @@ const notes = (state = initState, action) => {
         activeNote: newNote
       })
     case DELETE_NOTE:
-      return handleDelete(state, state.activeNote.id)
+      return handleDelete(state, action.index)
     case EDIT_NOTE:
       return handleEdit(state, action.text)
     case SET_ACTIVE_NOTE:
@@ -78,7 +90,7 @@ const notes = (state = initState, action) => {
         activeNote: action.note
       })
     case TOGGLE_FAVORITE:
-      return handleFavorite(state)
+      return handleFavorite(state, action.index)
     case TOGGLE_FILTER:
       return Object.assign({}, state, {
         show: action.style 

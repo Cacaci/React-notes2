@@ -2,6 +2,7 @@ import {
   ADD_NOTE,
   EDIT_NOTE,
   DELETE_NOTE,
+  DELETE_NOTE_ALL,
   SET_ACTIVE_NOTE,
   TOGGLE_FAVORITE,
   TOGGLE_FILTER
@@ -16,7 +17,12 @@ export const editNote = (text) => {
   }
 }
 
-export const deleteNote = () => ({ type: DELETE_NOTE })
+export const deleteNote = (index) => ({ 
+  type: DELETE_NOTE,
+  index
+})
+
+export const deleteNoteAll = () => ({ type: DELETE_NOTE_ALL })
 
 export const setActiveNote = (note) => {
   return {
@@ -25,7 +31,10 @@ export const setActiveNote = (note) => {
   }
 }
 
-export const toggleFavorite = () => ({ type: TOGGLE_FAVORITE })
+export const toggleFavorite = (index) => ({ 
+  type: TOGGLE_FAVORITE,
+  index
+})
 
 /* 写法一： */
 // export const toggleFilter = style => {
