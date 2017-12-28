@@ -22,7 +22,7 @@ const notes = (state = initState, action) => {
     newNotes = [...notes.slice(0, index), ...notes.slice(index + 1)]
     return Object.assign({}, state, {
       notes: newNotes,
-      activeNote: newNotes[index] || newNotes[0] || []
+      activeNote: newNotes[index] || newNotes[0] || {}
     })
     
   }

@@ -1,13 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import reducers from './reducers'
 import App from './containers/App'
 import registerServiceWorker from './registerServiceWorker'
+import { addNote } from './actions'
 
-const store = createStore(reducers)
+const store = createStore(
+  reducers,
+  applyMiddleware(thunk)
+)
+
+// console.log(applyMiddleware(thunk))
+
+// 使用redux-thunk中间件，在actions里一步触发dispatch， 使用thunk是为了在actions中能够传递dispatch
+// console.log(addNote())
+
+// 不使用redux-thunk中间件
+// console.log(store.dispatch(addNote()))
 
 store.subscribe(() => {
   console.log(store.getState())

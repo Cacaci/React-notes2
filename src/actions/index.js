@@ -8,7 +8,23 @@ import {
   TOGGLE_FILTER
 } from '../constants'
 
-export const addNote = () => ({ type: ADD_NOTE })
+
+// 使用redux-thunk中间件，在actions里一步触发dispatch
+export const addNote = () => {
+  return (dispatch, getState) => {
+    dispatch({type: ADD_NOTE})
+    // 在需要dispatch其他actions并且需要传递局部state的时候，可以通过getState这个方法去获取局部状态去传递给下一个actions
+
+    // 异步代码开始...
+    setTimeout(() => {
+      console.log('获取state局部状态show: ', getState().show)
+      dispatch(editNote('执行异步修改text'))
+    }, 5000)
+  }
+}
+
+// 不使用redux-thunk中间件
+// export const addNote = () => ({ type: ADD_NOTE })
 
 export const editNote = text => ({
   type: EDIT_NOTE,
