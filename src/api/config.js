@@ -2,13 +2,7 @@ import axios from 'axios'
 
 let instance = axios.create()
 axios.defaults.timeout = 5000
-instance.defaults = {
-  timeout: 5000,
-  baseURL: '/interface',
-  proxy: {
-    host: 'http://account.test.yurl.vip/interface' 
-  }
-}
+instance.defaults.baseURL = '/interface'
 
 
 instance.interceptors.request.use(

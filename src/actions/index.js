@@ -19,10 +19,9 @@ export const addNote = () => {
     // 异步代码开始...
     setTimeout(() => {
       console.log('获取state局部状态show: ', getState().show)
-      dispatch(editNote('执行异步修改text'))
-      api.getBalance()
+      api.getAccount()
         .then(res => {
-          console.log(res)
+          dispatch(editNote(`执行异步修改: ${res.name}`))
         })
         .catch(err => {
           console.log(err)
