@@ -8,6 +8,7 @@ import {
   TOGGLE_FILTER
 } from '../constants'
 
+import api from '../api'
 
 // 使用redux-thunk中间件，在actions里一步触发dispatch
 export const addNote = () => {
@@ -19,7 +20,14 @@ export const addNote = () => {
     setTimeout(() => {
       console.log('获取state局部状态show: ', getState().show)
       dispatch(editNote('执行异步修改text'))
-    }, 5000)
+      api.getBalance()
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }, 2000)
   }
 }
 
