@@ -98,5 +98,9 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^3.0.6"
   }
 }
