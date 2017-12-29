@@ -16,12 +16,24 @@ export const addNote = () => {
     dispatch({type: ADD_NOTE})
     // 在需要dispatch其他actions并且需要传递局部state的时候，可以通过getState这个方法去获取局部状态去传递给下一个actions
 
+    // await
+    async function getUserInfo() {
+      const user = await api.getLoginInfo()
+      console.log(user)
+    }
+
     // 异步代码开始...
     setTimeout(() => {
       console.log('获取state局部状态show: ', getState().show)
+      getUserInfo()
       api.getAccount()
         .then(res => {
           dispatch(editNote(`执行异步修改: ${res.name}`))
+          return res
+        })
+        .then(res => res.name)
+        .then(name => {
+          console.log(`我的名字叫${name}`)
         })
         .catch(err => {
           console.log(err)

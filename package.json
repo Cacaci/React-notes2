@@ -54,7 +54,7 @@
   "proxy": {
     "/interface": {
       "target": "http://account.test.yurl.vip/",
-      "changeOrigin":true
+      "changeOrigin": true
     }
   },
   "jest": {
