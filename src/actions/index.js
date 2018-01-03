@@ -10,15 +10,18 @@ import {
 
 import api from '../api'
 
-// 使用redux-thunk中间件，在actions里一步触发dispatch，这里action不再返回一个简单的js对象，使用redux-thunk后可以返回一个函数
-// redux-thunk的作用就是，不仅让dispatch能够处理js对象，也能够处理一个函数
+// 使用redux-thunk中间件，在actions里一步触发dispatch
 export const addNote = () => {
   return (dispatch, getState) => {
     dispatch({type: ADD_NOTE})
     // 在需要dispatch其他actions并且需要传递局部state的时候，可以通过getState这个方法去获取局部状态去传递给下一个actions
 
     // await
-    async function getUserInfo() {
+    // async function getUserInfo() {
+    //   const user = await api.getLoginInfo()
+    //   console.log(user)
+    // }
+    const getUserInfo = async () => {
       const user = await api.getLoginInfo()
       console.log(user)
     }
