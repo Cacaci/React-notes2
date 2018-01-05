@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
-
 import { observable, action, computed, autorun } from 'mobx'
-import { observer } from 'mobx-react'
 
-var appState = observable({
+// Components
+import Header from './components/Header'
+import Footer from './components/Footer'
+
+// Stores
+import Store from './stores'
+const store = new Store()
+console.log(store)
+
+const appState = observable({
   timer: 0,
   num: 100
 })
-
-// appState.resetTimer = action(function reset() {
-//   appState.timer = 0
-// });
-
-// setInterval(action(function tick() {
-//   appState.timer += 1
-// }), 1000)
 
 appState.resetTimer = action(() => {
   appState.timer = 0
@@ -24,66 +23,6 @@ setInterval(action(() => {
   appState.timer += 1
 }), 1000)
 
-class Store {
-  @observable todos = [
-    {
-      title: 'New todo标题',
-      done: false
-    }
-  ]
-  @computed get finishedTodos () {
-    return this.todos.filter(todo => todo.done)
-  }
-  @action changeTodoTitle ({index, title}) {
-    this.todos[index].title = title
-  }
-  @action addTodo () {
-    this.todos.push({title: 'New todo标题', done: false})
-  }
-}
-
-const store = new Store()
-console.log(store)
-
-@observer
-class Header extends Component {
-  render () {
-    const { todos } = this.props.store
-    console.log(todos)
-    return (
-      <div className="header">
-        <p>我是头部</p>
-        <ul>
-          {
-            todos.map((item, index) => {
-              return (
-                <li onClick={() => {
-                  this.props.store.changeTodoTitle({index: index, title: '修改后的标题'})
-                }} key={index}>{item.title}</li>
-              )
-            })
-          }
-        </ul>
-        <button onClick={() => this.props.store.addTodo()} type="button">添加todo</button>
-      </div>
-    )
-  }
-}
-
-@observer
-class Footer extends Component {
-  onReset () {
-    this.props.appState.resetTimer()
-  }
-  render () {
-    return (
-      <div className="footer">
-        <p>我是底部：{this.props.appState.timer}</p>
-        <button onClick={this.onReset.bind(this)} type="button">重置</button>
-      </div>
-    )
-  }
-}
 
 class App extends Component {
   @observable price = 100
@@ -96,6 +35,13 @@ class App extends Component {
   @autorun(function getPrice() {
     console.log(`初始化数量：${appState.num}`)
   })
+
+  componentDidMount () {
+    console.log(this.props.children)
+  }
+  componentWillReact () {
+    console.log('接收到新的props，此钩子会被调用')
+  }
 
   render () {
     return (
