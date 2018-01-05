@@ -82,6 +82,14 @@ const mapDispatchToProps = dispatch => ({
 - [mobx mobx-react](https://github.com/mobxjs/mobx-react)
 - [redux-saga](https://github.com/redux-saga/redux-saga)
 
+#### Redux-thunk
+通过使用指定的 middleware，action creator 除了返回 action 对象外还可以返回函数。这时，这个 action creator 就成为了 thunk。
+当 action creator 返回函数时，这个函数会被 Redux Thunk middleware 执行。这个函数并不需要保持纯净；
+它还可以带有副作用，包括执行*异步 API 请求*。这个函数还可以 *dispatch action*，就像 dispatch 前面定义的同步 action 一样。
+
+像 redux-thunk 或 redux-promise 这样支持异步的 middleware 都包装了 store 的 dispatch() 方法，
+以此来让你 dispatch 一些除了 action 以外的其他内容，例如：函数或者 Promise。
+
 ### React-router
 ### Immutablejs
 ### 学习React、Redux、Redux-thunk、Mobx参考文章
