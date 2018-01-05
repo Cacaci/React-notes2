@@ -2,23 +2,11 @@
 // import React from 'react'
 
 // const Toolbar = ({
-//   notes,
-//   activeNote,
-//   handleAdd,
-//   handleDelete,
-//   handleFavorite
+//   handleAdd
 // }) => {
-
-//   const goDelete = (notes, handleDelete) => {
-//     if (notes.length === 0) return
-//     handleDelete()
-//   }
-
 //   return (
 //     <div id="toolbar">
 //       <i onClick={() => handleAdd()} className="glyphicon glyphicon-plus"></i>
-//       <i onClick={() => handleFavorite()} className={activeNote.favorite ? 'glyphicon glyphicon-star starred' : 'glyphicon glyphicon-star'}></i>
-//       <i onClick={() => goDelete(notes, handleDelete)} className="glyphicon glyphicon-remove"></i>
 //     </div>
 //   )
 // }
