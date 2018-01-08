@@ -47,6 +47,7 @@
 
 /* ES6写法(actions) */
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 export default class NoteList extends Component {
@@ -81,7 +82,7 @@ export default class NoteList extends Component {
     return (
       <div id="notes-list">
         <div id="list-header">
-          <h2>Notes | coligo</h2>
+          <h2><Link to="/">Home</Link> | <Link to="/about">About</Link></h2>
           <div className="btn-group btn-group-justified" role="group">
             <div className="btn-group" role="group">
               <button onClick={() => handleFilter('all')} type="button" className="btn btn-default">All Notes</button>

@@ -9,6 +9,16 @@ import App from './containers/App'
 import registerServiceWorker from './registerServiceWorker'
 // import { addNote } from './actions'
 
+/* 路由相关 */
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+import About from './components/About'
+import Article from './components/Article'
+/* end */
+
 const store = createStore(
   reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
@@ -31,7 +41,14 @@ console.log(store.getState())
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    {/* <App /> */}
+    <Router>
+      <div className="wrap" style={{ height: "100%" }}>
+        <Route exact path="/" component={App} />
+        <Route path="/about" component={About} />
+        <Route path="/article/:id" component={Article} />
+      </div>
+    </Router>
   </Provider>,
   document.getElementById('app')
 )

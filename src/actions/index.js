@@ -71,7 +71,8 @@ export const toggleFavorite = index => ({
   index
 })
 
-/* 写法二：用括号括起来可以省略return */
+/* 写法二：用括号括起来可以省略return  this will return a object
+ES 6中的规则是，紧随箭头的{ 被解析为块的开始，而不是对象的开始，所以小括号包裹对象字面量是唯一一个你需要牢记的小窍门 */
 export const toggleFilter = style => ({
   type: TOGGLE_FILTER,
   style
